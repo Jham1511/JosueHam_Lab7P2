@@ -136,6 +136,11 @@ public class main extends javax.swing.JFrame {
         );
 
         OpDestacados.setText("Agregar a Destacados");
+        OpDestacados.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                OpDestacadosMouseClicked(evt);
+            }
+        });
         PopUpArchivos.add(OpDestacados);
         PopUpArchivos.add(jSeparator1);
 
@@ -222,9 +227,9 @@ public class main extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(BtnCargar)
                     .addComponent(BtnSalir))
-                .addGap(34, 34, 34)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 91, Short.MAX_VALUE)
                 .addComponent(PBPath, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(112, Short.MAX_VALUE))
+                .addGap(55, 55, 55))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -254,7 +259,7 @@ public class main extends javax.swing.JFrame {
         a.cargarArchivo();
         a.setArchivos(ar);
         a.escribirArchivo();
-        
+
         FieldNombre.setText("");
         FieldSize.setText("");
         JOptionPane.showMessageDialog(this, "Archivo guardado exitosamente");
@@ -270,42 +275,12 @@ public class main extends javax.swing.JFrame {
     }//GEN-LAST:event_BtnRegresarActionPerformed
 
     private void BtnCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCargarActionPerformed
-        File fichero = null;
-        FileInputStream entrada = null;
-        ObjectInputStream objeto = null;        
-        try {
-            JFileChooser jfc = new JFileChooser();
-            FileNameExtensionFilter filtro = 
-                    new FileNameExtensionFilter(
-                            "Archivos", "ar");
-            jfc.setFileFilter(filtro);                   
-            int seleccion = jfc.showOpenDialog(this);
-            if (seleccion == JFileChooser.APPROVE_OPTION)
-            {
-               fichero = jfc.getSelectedFile();
-                entrada
-                    = new FileInputStream(fichero);
-                 objeto
-                    = new ObjectInputStream(entrada);              
-                 adminArchivos ar = new adminArchivos("./archivos.ar");
-                ar.cargarArchivo();
-               JListArchivos.setModel(llenarListaArch(ar));
-               
-            } //fin if
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        try {
-            objeto.close();
-            entrada.close();
-        } catch (IOException ex) {
-        }
+
     }//GEN-LAST:event_BtnCargarActionPerformed
 
     private void BtnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSalirActionPerformed
-       JOptionPane.showMessageDialog(this, "Saliendo del programa...");
-       System.exit(0);
+        JOptionPane.showMessageDialog(this, "Saliendo del programa...");
+        System.exit(0);
     }//GEN-LAST:event_BtnSalirActionPerformed
 
     private void JListCarpetasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JListCarpetasMouseClicked
@@ -319,8 +294,23 @@ public class main extends javax.swing.JFrame {
     }//GEN-LAST:event_JListCarpetasMouseClicked
 
     private void JListArchivosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JListArchivosMouseClicked
-        
+        if (JListArchivos.getSelectedIndex() == 0) {
+            miUnidad.cargarArchivo();
+            JListCarpetas.setModel(llenarListaArch(miUnidad));
+        } else if (JListArchivos.getSelectedIndex() == 1){
+            destacados.cargarArchivo();
+            JListCarpetas.setModel(llenarListaArch(destacados));
+        } else if(JListArchivos.getSelectedIndex() == 2){
+            papelera.cargarArchivo();
+            JListCarpetas.setModel(llenarListaArch(papelera));
+        }
     }//GEN-LAST:event_JListArchivosMouseClicked
+
+    private void OpDestacadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_OpDestacadosMouseClicked
+        adminArchivos ar = new adminArchivos("./destacados.des");
+
+
+    }//GEN-LAST:event_OpDestacadosMouseClicked
 
     /**
      * @param args the command line arguments
@@ -400,14 +390,18 @@ public class main extends javax.swing.JFrame {
         DiaCRUDArchivos.setVisible(true);
         this.setVisible(false);
     }
-    
-    public DefaultListModel llenarListaArch(adminArchivos a){
+
+    public DefaultListModel llenarListaArch(adminArchivos a) {
         DefaultListModel modelo = new DefaultListModel<>();
         for (Archivo ar : a.getListaArchivos()) {
             modelo.addElement(ar);
         }
         return modelo;
     }
+
+    adminArchivos miUnidad = new adminArchivos("./archivos.ar");
+    adminArchivos destacados = new adminArchivos("./destcados.des");
+    adminArchivos papelera = new adminArchivos("./papelera.pap");
     Random aleatorio = new Random();
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnCargar;
