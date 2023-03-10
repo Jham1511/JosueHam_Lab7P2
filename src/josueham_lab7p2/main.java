@@ -57,8 +57,9 @@ public class main extends javax.swing.JFrame {
         BtnCrear = new javax.swing.JButton();
         BtnCargar = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        JListCarpetas = new javax.swing.JList<>();
         BtnSalir = new javax.swing.JButton();
+        PBPath = new javax.swing.JProgressBar();
 
         lb_nombre.setFont(new java.awt.Font("Cooper Black", 0, 14)); // NOI18N
         lb_nombre.setText("Nombre del archivo");
@@ -169,8 +170,13 @@ public class main extends javax.swing.JFrame {
             }
         });
 
-        jList1.setModel(new DefaultListModel());
-        jScrollPane3.setViewportView(jList1);
+        JListCarpetas.setModel(new DefaultListModel());
+        JListCarpetas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                JListCarpetasMouseClicked(evt);
+            }
+        });
+        jScrollPane3.setViewportView(JListCarpetas);
 
         BtnSalir.setText("Salir");
         BtnSalir.addActionListener(new java.awt.event.ActionListener() {
@@ -183,16 +189,19 @@ public class main extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGap(36, 36, 36)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(PBPath, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(BtnCargar)
-                        .addGap(79, 79, 79)
-                        .addComponent(BtnSalir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(BtnCargar)
+                                .addGap(79, 79, 79)
+                                .addComponent(BtnSalir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(61, 61, 61)
                 .addComponent(BtnCrear, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26))
@@ -213,7 +222,9 @@ public class main extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(BtnCargar)
                     .addComponent(BtnSalir))
-                .addContainerGap(175, Short.MAX_VALUE))
+                .addGap(34, 34, 34)
+                .addComponent(PBPath, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(112, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -292,20 +303,24 @@ public class main extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_BtnCargarActionPerformed
 
-    private void JListArchivosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JListArchivosMouseClicked
-       if (JListArchivos.getSelectedIndex() >= 0) {
-            if (evt.isMetaDown()) {
-                PopUpArchivos.show(evt.getComponent(),
-                        evt.getX(), evt.getY());
-
-            }
-        }
-    }//GEN-LAST:event_JListArchivosMouseClicked
-
     private void BtnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSalirActionPerformed
        JOptionPane.showMessageDialog(this, "Saliendo del programa...");
        System.exit(0);
     }//GEN-LAST:event_BtnSalirActionPerformed
+
+    private void JListCarpetasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JListCarpetasMouseClicked
+        adminArchivos a = new adminArchivos("./destacados.des");
+        a.cargarArchivo();
+        if (JListArchivos.getSelectedIndex() >= 0) {
+            if (evt.isMetaDown()) {
+                JListCarpetas.setModel(llenarListaArch(a));
+            }
+        }
+    }//GEN-LAST:event_JListCarpetasMouseClicked
+
+    private void JListArchivosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JListArchivosMouseClicked
+        
+    }//GEN-LAST:event_JListArchivosMouseClicked
 
     /**
      * @param args the command line arguments
@@ -404,13 +419,14 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JTextField FieldNombre;
     private javax.swing.JTextField FieldSize;
     private javax.swing.JList<String> JListArchivos;
+    private javax.swing.JList<String> JListCarpetas;
     private javax.swing.JMenuItem OpDestacados;
     private javax.swing.JMenuItem OpPapelera;
+    private javax.swing.JProgressBar PBPath;
     private javax.swing.JPopupMenu PopUpArchivos;
     private javax.swing.JComboBox<String> cb_extension;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JList<String> jList1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
