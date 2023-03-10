@@ -4,12 +4,15 @@
  */
 package josueham_lab7p2;
 
+import java.io.Serializable;
+
 /**
  *
  * @author skxka
  */
-public class Archivo {
-    private String nombre, link,extension;
+public class Archivo implements Serializable {
+
+    private String nombre, link, extension;
     private double tamanho;
 
     public Archivo() {
@@ -56,8 +59,7 @@ public class Archivo {
 
     @Override
     public String toString() {
-        return  nombre + "." + extension + "/" + link + " - " + tamanho;
+        return nombre + "." + extension + "" + "//" + link + " - " + tamanho;
     }
-    
-    
+
 }
