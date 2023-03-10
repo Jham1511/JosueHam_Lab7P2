@@ -272,6 +272,8 @@ public class main extends javax.swing.JFrame {
             if (evt.isMetaDown()) {
               PopUpArchivos.show(evt.getComponent(), evt.getX(), evt.getY());
             }
+            String cadena = (String)JListCarpetas.getSelectedValue();
+            System.out.println(cadena);
         }
     }//GEN-LAST:event_JListCarpetasMouseClicked
 
@@ -289,6 +291,7 @@ public class main extends javax.swing.JFrame {
     }//GEN-LAST:event_JListArchivosMouseClicked
 
     private void OpDestacadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_OpDestacadosMouseClicked
+        String strArchivo = JListCarpetas.getSelectedValue();
         
     }//GEN-LAST:event_OpDestacadosMouseClicked
 
@@ -374,7 +377,7 @@ public class main extends javax.swing.JFrame {
     public DefaultListModel llenarListaArch(adminArchivos a) {
         DefaultListModel modelo = new DefaultListModel<>();
         for (Archivo ar : a.getListaArchivos()) {
-            modelo.addElement(ar);
+            modelo.addElement(ar.toString());
         }
         return modelo;
     }
