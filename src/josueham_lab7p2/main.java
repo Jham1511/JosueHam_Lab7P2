@@ -55,7 +55,6 @@ public class main extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         JListArchivos = new javax.swing.JList<>();
         BtnCrear = new javax.swing.JButton();
-        BtnCargar = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         JListCarpetas = new javax.swing.JList<>();
         BtnSalir = new javax.swing.JButton();
@@ -168,13 +167,6 @@ public class main extends javax.swing.JFrame {
             }
         });
 
-        BtnCargar.setText("Cargar Archivo");
-        BtnCargar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnCargarActionPerformed(evt);
-            }
-        });
-
         JListCarpetas.setModel(new DefaultListModel());
         JListCarpetas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -199,12 +191,9 @@ public class main extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(PBPath, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(BtnCargar)
-                                .addGap(79, 79, 79)
-                                .addComponent(BtnSalir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(BtnSalir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(61, 61, 61)
@@ -223,13 +212,11 @@ public class main extends javax.swing.JFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(26, 26, 26)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(BtnCargar)
-                    .addComponent(BtnSalir))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 91, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(BtnSalir)
+                .addGap(36, 36, 36)
                 .addComponent(PBPath, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(55, 55, 55))
+                .addContainerGap(118, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -274,21 +261,16 @@ public class main extends javax.swing.JFrame {
         DiaCRUDArchivos.setVisible(false);
     }//GEN-LAST:event_BtnRegresarActionPerformed
 
-    private void BtnCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCargarActionPerformed
-
-    }//GEN-LAST:event_BtnCargarActionPerformed
-
     private void BtnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSalirActionPerformed
         JOptionPane.showMessageDialog(this, "Saliendo del programa...");
         System.exit(0);
     }//GEN-LAST:event_BtnSalirActionPerformed
 
     private void JListCarpetasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JListCarpetasMouseClicked
-        adminArchivos a = new adminArchivos("./destacados.des");
-        a.cargarArchivo();
-        if (JListArchivos.getSelectedIndex() >= 0) {
+
+        if (JListCarpetas.getSelectedIndex() >= 0) {
             if (evt.isMetaDown()) {
-                JListCarpetas.setModel(llenarListaArch(a));
+              PopUpArchivos.show(evt.getComponent(), evt.getX(), evt.getY());
             }
         }
     }//GEN-LAST:event_JListCarpetasMouseClicked
@@ -307,9 +289,7 @@ public class main extends javax.swing.JFrame {
     }//GEN-LAST:event_JListArchivosMouseClicked
 
     private void OpDestacadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_OpDestacadosMouseClicked
-        adminArchivos ar = new adminArchivos("./destacados.des");
-
-
+        
     }//GEN-LAST:event_OpDestacadosMouseClicked
 
     /**
@@ -404,7 +384,6 @@ public class main extends javax.swing.JFrame {
     adminArchivos papelera = new adminArchivos("./papelera.pap");
     Random aleatorio = new Random();
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton BtnCargar;
     private javax.swing.JButton BtnCrear;
     private javax.swing.JButton BtnGuardarArchivo;
     private javax.swing.JButton BtnRegresar;
