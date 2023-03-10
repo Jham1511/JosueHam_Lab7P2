@@ -4,15 +4,16 @@
  */
 package josueham_lab7p2;
 
+import java.util.Random;
+
 /**
  *
  * @author skxka
  */
 public class Main extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Main
-     */
+    Random aleatorio = new Random();
+
     public Main() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -27,38 +28,122 @@ public class Main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
 
+        DiaCRUDArchivos = new javax.swing.JDialog();
+        lb_nombre = new javax.swing.JLabel();
+        FieldNombre = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        JListArchivos = new javax.swing.JList<>();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        JTreeArchivos = new javax.swing.JTree();
+        BtnFlecha = new javax.swing.JButton();
+        BtnCrear = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+
+        lb_nombre.setText("Nombre del archivo");
+
+        javax.swing.GroupLayout DiaCRUDArchivosLayout = new javax.swing.GroupLayout(DiaCRUDArchivos.getContentPane());
+        DiaCRUDArchivos.getContentPane().setLayout(DiaCRUDArchivosLayout);
+        DiaCRUDArchivosLayout.setHorizontalGroup(
+            DiaCRUDArchivosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(DiaCRUDArchivosLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(DiaCRUDArchivosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lb_nombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(FieldNombre))
+                .addContainerGap(339, Short.MAX_VALUE))
+        );
+        DiaCRUDArchivosLayout.setVerticalGroup(
+            DiaCRUDArchivosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(DiaCRUDArchivosLayout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addComponent(lb_nombre)
+                .addGap(31, 31, 31)
+                .addComponent(FieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(242, Short.MAX_VALUE))
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        JListArchivos.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Mi Unidad", "Destacados", "Papelera", " " };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane1.setViewportView(JListArchivos);
+
+        jScrollPane2.setViewportView(JTreeArchivos);
+
+        BtnFlecha.setText("->");
+
+        BtnCrear.setText("Crear Archivo");
+        BtnCrear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnCrearActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("jButton2");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 517, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(BtnFlecha)
+                .addGap(40, 40, 40)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 99, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(BtnCrear, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(50, 50, 50))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 425, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(61, 61, 61)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 254, Short.MAX_VALUE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(172, 172, 172)
+                        .addComponent(BtnFlecha))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(120, 120, 120)
+                        .addComponent(BtnCrear)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton2)))
+                .addContainerGap(135, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>                        
+
+    private void BtnCrearActionPerformed(java.awt.event.ActionEvent evt) {                                         
+       String link = "";
+       link = llenarLink(link);
+        System.out.println(link);
+        String enlace = "";
+        enlace = llenarLinkCarpe(enlace);
+        System.out.println(enlace);
+    }                                        
 
     /**
      * @param args the command line arguments
@@ -95,7 +180,53 @@ public class Main extends javax.swing.JFrame {
         });
     }
 
+    public String llenarLink(String link) {
+        String Mayus = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        String Minus = "abcefghijklmnopqrstuvwxyz";
+        String nums = "0123456789";
+        for (int i = 0; i < 4; i++) {
+            if (link.length() < 9) {
+                link += Mayus.charAt(aleatorio.nextInt(26));
+                link += Minus.charAt(aleatorio.nextInt(26));
+                link += nums.charAt(aleatorio.nextInt(10));
+            } else{
+                link += Mayus.charAt(aleatorio.nextInt(26));
+                break;
+            }
+        }
+
+        return link;
+    }
+    
+    public String llenarLinkCarpe(String link) {
+        String Mayus = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        String Minus = "abcefghijklmnopqrstuvwxyz";
+        String nums = "0123456789";
+        for (int i = 0; i < 2; i++) {
+            if (link.length() < 3) {
+                link += Mayus.charAt(aleatorio.nextInt(26));
+                link += Minus.charAt(aleatorio.nextInt(26));
+                link += nums.charAt(aleatorio.nextInt(10));
+            } else{
+                link += Mayus.charAt(aleatorio.nextInt(26));
+                link += Minus.charAt(aleatorio.nextInt(26));
+                break;
+            }
+        }
+
+        return link;
+    }
     // Variables declaration - do not modify                     
+    private javax.swing.JButton BtnCrear;
+    private javax.swing.JButton BtnFlecha;
+    private javax.swing.JDialog DiaCRUDArchivos;
+    private javax.swing.JTextField FieldNombre;
+    private javax.swing.JList<String> JListArchivos;
+    private javax.swing.JTree JTreeArchivos;
+    private javax.swing.JButton jButton2;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel lb_nombre;
     // End of variables declaration                   
 }
