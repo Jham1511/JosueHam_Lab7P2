@@ -10,7 +10,10 @@ import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.util.Date;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -29,9 +32,9 @@ public class main extends javax.swing.JFrame {
     public main() {
         initComponents();
         this.setLocationRelativeTo(null);
-       adminPBPath PB = new adminPBPath (JListArchivos, PBPath);
-       Thread proceso =  new Thread(PB);
-       proceso.start();     
+        adminPBPath PB = new adminPBPath(JListArchivos, PBPath);
+        Thread proceso = new Thread(PB);
+        proceso.start();
     }
 
     /**
@@ -148,6 +151,11 @@ public class main extends javax.swing.JFrame {
                 OpDestacadosMouseClicked(evt);
             }
         });
+        OpDestacados.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                OpDestacadosActionPerformed(evt);
+            }
+        });
         PopUpArchivos.add(OpDestacados);
         PopUpArchivos.add(jSeparator1);
 
@@ -157,6 +165,11 @@ public class main extends javax.swing.JFrame {
                 OpPapeleraMouseClicked(evt);
             }
         });
+        OpPapelera.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                OpPapeleraActionPerformed(evt);
+            }
+        });
         PopUpArchivos.add(OpPapelera);
         PopUpArchivos.add(jSeparator2);
 
@@ -164,6 +177,11 @@ public class main extends javax.swing.JFrame {
         OpDescarga.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 OpDescargaMouseClicked(evt);
+            }
+        });
+        OpDescarga.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                OpDescargaActionPerformed(evt);
             }
         });
         PopUpArchivos.add(OpDescarga);
@@ -300,9 +318,9 @@ public class main extends javax.swing.JFrame {
 
         if (JListCarpetas.getSelectedIndex() >= 0) {
             if (evt.isMetaDown()) {
-              PopUpArchivos.show(evt.getComponent(), evt.getX(), evt.getY());
+                PopUpArchivos.show(evt.getComponent(), evt.getX(), evt.getY());
             }
-            String cadena = (String)JListCarpetas.getSelectedValue();
+            String cadena = (String) JListCarpetas.getSelectedValue();
             System.out.println(cadena);
         }
     }//GEN-LAST:event_JListCarpetasMouseClicked
@@ -311,20 +329,24 @@ public class main extends javax.swing.JFrame {
         if (JListArchivos.getSelectedIndex() == 0) {
             miUnidad.cargarArchivo();
             JListCarpetas.setModel(llenarListaArch(miUnidad));
-        } else if (JListArchivos.getSelectedIndex() == 1){
+        }
+        if (JListArchivos.getSelectedIndex() == 1) {
             destacados.cargarArchivo();
             JListCarpetas.setModel(llenarListaArch(destacados));
             System.out.println(destacados.getListaArchivos());
-        } else if(JListArchivos.getSelectedIndex() == 2){
+        }
+        if (JListArchivos.getSelectedIndex() == 2) {
             papelera.cargarArchivo();
             JListCarpetas.setModel(llenarListaArch(papelera));
         }
     }//GEN-LAST:event_JListArchivosMouseClicked
 
     private void OpDestacadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_OpDestacadosMouseClicked
-        String [] tokens = JListCarpetas.getSelectedValue().split("\\|");
+        String[] tokens = JListCarpetas.getSelectedValue().split("\\|");
         double tamanho = Double.parseDouble(tokens[3]);
-        
+        for (int i = 0; i < tokens.length; i++) {
+            System.out.println("[" + tokens[i] + "]");
+        }
         Archivo u = new Archivo(tokens[0], tokens[2], tokens[1], tamanho);
         destacados.cargarArchivo();
         destacados.setArchivos(u);
@@ -332,22 +354,61 @@ public class main extends javax.swing.JFrame {
     }//GEN-LAST:event_OpDestacadosMouseClicked
 
     private void OpPapeleraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_OpPapeleraMouseClicked
-        String [] tokens = JListCarpetas.getSelectedValue().split("\\|");
-        double tamanho = Double.parseDouble(tokens[3]);
         
-        Archivo u = new Archivo(tokens[0], tokens[2], tokens[1], tamanho);
-        
-        papelera.cargarArchivo();
-        papelera.setArchivos(u);
-        papelera.escribirArchivo();
     }//GEN-LAST:event_OpPapeleraMouseClicked
 
     private void OpDescargaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_OpDescargaMouseClicked
-        boolean vive ;
-        boolean avanzar ;
+
         
-        adminDescarga des = new adminDescarga(PBDescarga, SOMEBITS, JListCarpetas, OpDescarga);
     }//GEN-LAST:event_OpDescargaMouseClicked
+
+    private void OpDestacadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpDestacadosActionPerformed
+        String[] tokens = JListCarpetas.getSelectedValue().split("\\|");
+        double tamanho = Double.parseDouble(tokens[3]);
+        for (int i = 0; i < tokens.length; i++) {
+            System.out.println("[" + tokens[i] + "]");
+        }
+        Archivo u = new Archivo(tokens[0], tokens[2], tokens[1], tamanho);
+
+        destacados.cargarArchivo();
+        destacados.setArchivos(u);
+        destacados.escribirArchivo();
+    }//GEN-LAST:event_OpDestacadosActionPerformed
+
+    private void OpPapeleraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpPapeleraActionPerformed
+       String[] tokens = JListCarpetas.getSelectedValue().split("\\|");
+        double tamanho = Double.parseDouble(tokens[3]);
+        for (int i = 0; i < tokens.length; i++) {
+            System.out.println("[" + tokens[i] + "]");
+        }
+        Archivo u = new Archivo(tokens[0], tokens[2], tokens[1], tamanho);
+        papelera.cargarArchivo();
+        papelera.setArchivos(u);
+        papelera.escribirArchivo();
+        
+        for (int i = 0; i < miUnidad.getListaArchivos().size(); i++) {
+            if (miUnidad.getListaArchivos().toString().equals(u.toString())) {
+                miUnidad.getListaArchivos().remove(i);
+            }
+        }
+        
+    }//GEN-LAST:event_OpPapeleraActionPerformed
+
+    private void OpDescargaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpDescargaActionPerformed
+       String[] tokenizer;
+        tokenizer = JListCarpetas.getSelectedValue().split("\\|");
+        double sec = Double.parseDouble(tokenizer[3]);
+
+        try {
+            miUnidad.cargarArchivo();
+            escribirBit(miUnidad);
+        } catch (IOException ex) {
+            Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        adminDescarga des = new adminDescarga(PBDescarga, sec, JListCarpetas, OpDescarga);
+        Thread process = new Thread(des);
+        process.start();
+    }//GEN-LAST:event_OpDescargaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -435,28 +496,29 @@ public class main extends javax.swing.JFrame {
         }
         return modelo;
     }
-    
-//     public void escribirBit() throws IOException {
-//        FileWriter fw = null;
-//        BufferedWriter bw = null;
-//        try {
-//            fw = new FileWriter(archivo, true);
-//            bw = new BufferedWriter(fw);
-//            for (Usuario t : ap.getListaUsuarios()) {
-//                bw.write(t.getUsername() + "->");
-//                bw.write(t.getTipo() + "->");
-//                bw.write(new Date().toInstant().toString() + "\n");
-//            }
-//            bw.flush();
-//        } catch (Exception ex) {
-//        }
-//        bw.close();
-//        fw.close();
-//    }
+
+    public void escribirBit(adminArchivos a) throws IOException {
+        FileWriter fw = null;
+        BufferedWriter bw = null;
+        try {
+            fw = new FileWriter(archivo, true);
+            bw = new BufferedWriter(fw);
+            for (Archivo t : a.getListaArchivos()) {
+                bw.write(t.getNombre() + "->");
+                bw.write(t.getLink() + "->");
+                bw.write(new Date().toInstant().toString() + "\n");
+            }
+            bw.flush();
+        } catch (Exception ex) {
+        }
+        bw.close();
+        fw.close();
+    }
     adminArchivos miUnidad = new adminArchivos("./archivos.ar");
     adminArchivos destacados = new adminArchivos("./destacados.des");
     adminArchivos papelera = new adminArchivos("./papelera.pap");
     Random aleatorio = new Random();
+    File archivo = new File("./bitacora.txt");
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnCrear;
     private javax.swing.JButton BtnGuardarArchivo;
