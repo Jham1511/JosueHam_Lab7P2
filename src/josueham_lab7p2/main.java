@@ -4,8 +4,10 @@
  */
 package josueham_lab7p2;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.Random;
@@ -27,6 +29,9 @@ public class main extends javax.swing.JFrame {
     public main() {
         initComponents();
         this.setLocationRelativeTo(null);
+       adminPBPath PB = new adminPBPath (JListArchivos, PBPath);
+       Thread proceso =  new Thread(PB);
+       proceso.start();
     }
 
     /**
@@ -51,6 +56,8 @@ public class main extends javax.swing.JFrame {
         OpDestacados = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         OpPapelera = new javax.swing.JMenuItem();
+        jSeparator2 = new javax.swing.JPopupMenu.Separator();
+        OpDescarga = new javax.swing.JMenuItem();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         JListArchivos = new javax.swing.JList<>();
@@ -59,6 +66,7 @@ public class main extends javax.swing.JFrame {
         JListCarpetas = new javax.swing.JList<>();
         BtnSalir = new javax.swing.JButton();
         PBPath = new javax.swing.JProgressBar();
+        PBDescarga = new javax.swing.JProgressBar();
 
         lb_nombre.setFont(new java.awt.Font("Cooper Black", 0, 14)); // NOI18N
         lb_nombre.setText("Nombre del archivo");
@@ -144,7 +152,16 @@ public class main extends javax.swing.JFrame {
         PopUpArchivos.add(jSeparator1);
 
         OpPapelera.setText("Agregar a Papelera");
+        OpPapelera.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                OpPapeleraMouseClicked(evt);
+            }
+        });
         PopUpArchivos.add(OpPapelera);
+        PopUpArchivos.add(jSeparator2);
+
+        OpDescarga.setText("Descargar Archivo");
+        PopUpArchivos.add(OpDescarga);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -182,6 +199,11 @@ public class main extends javax.swing.JFrame {
             }
         });
 
+        PBPath.setForeground(new java.awt.Color(153, 51, 255));
+
+        PBDescarga.setBackground(new java.awt.Color(71, 71, 75));
+        PBDescarga.setForeground(new java.awt.Color(102, 255, 255));
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -189,6 +211,7 @@ public class main extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGap(36, 36, 36)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(PBDescarga, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(PBPath, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -216,7 +239,9 @@ public class main extends javax.swing.JFrame {
                 .addComponent(BtnSalir)
                 .addGap(36, 36, 36)
                 .addComponent(PBPath, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(118, Short.MAX_VALUE))
+                .addGap(34, 34, 34)
+                .addComponent(PBDescarga, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(60, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -284,6 +309,7 @@ public class main extends javax.swing.JFrame {
         } else if (JListArchivos.getSelectedIndex() == 1){
             destacados.cargarArchivo();
             JListCarpetas.setModel(llenarListaArch(destacados));
+            System.out.println(destacados.getListaArchivos());
         } else if(JListArchivos.getSelectedIndex() == 2){
             papelera.cargarArchivo();
             JListCarpetas.setModel(llenarListaArch(papelera));
@@ -291,9 +317,25 @@ public class main extends javax.swing.JFrame {
     }//GEN-LAST:event_JListArchivosMouseClicked
 
     private void OpDestacadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_OpDestacadosMouseClicked
-        String strArchivo = JListCarpetas.getSelectedValue();
+        String [] tokens = JListCarpetas.getSelectedValue().split("\\|");
+        double tamanho = Double.parseDouble(tokens[3]);
         
+        Archivo u = new Archivo(tokens[0], tokens[2], tokens[1], tamanho);
+        destacados.cargarArchivo();
+        destacados.setArchivos(u);
+        destacados.escribirArchivo();
     }//GEN-LAST:event_OpDestacadosMouseClicked
+
+    private void OpPapeleraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_OpPapeleraMouseClicked
+        String [] tokens = JListCarpetas.getSelectedValue().split("\\|");
+        double tamanho = Double.parseDouble(tokens[3]);
+        
+        Archivo u = new Archivo(tokens[0], tokens[2], tokens[1], tamanho);
+        
+        papelera.cargarArchivo();
+        papelera.setArchivos(u);
+        papelera.escribirArchivo();
+    }//GEN-LAST:event_OpPapeleraMouseClicked
 
     /**
      * @param args the command line arguments
@@ -381,9 +423,26 @@ public class main extends javax.swing.JFrame {
         }
         return modelo;
     }
-
+    
+//     public void escribirBit() throws IOException {
+//        FileWriter fw = null;
+//        BufferedWriter bw = null;
+//        try {
+//            fw = new FileWriter(archivo, true);
+//            bw = new BufferedWriter(fw);
+//            for (Usuario t : ap.getListaUsuarios()) {
+//                bw.write(t.getUsername() + "->");
+//                bw.write(t.getTipo() + "->");
+//                bw.write(new Date().toInstant().toString() + "\n");
+//            }
+//            bw.flush();
+//        } catch (Exception ex) {
+//        }
+//        bw.close();
+//        fw.close();
+//    }
     adminArchivos miUnidad = new adminArchivos("./archivos.ar");
-    adminArchivos destacados = new adminArchivos("./destcados.des");
+    adminArchivos destacados = new adminArchivos("./destacados.des");
     adminArchivos papelera = new adminArchivos("./papelera.pap");
     Random aleatorio = new Random();
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -396,8 +455,10 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JTextField FieldSize;
     private javax.swing.JList<String> JListArchivos;
     private javax.swing.JList<String> JListCarpetas;
+    private javax.swing.JMenuItem OpDescarga;
     private javax.swing.JMenuItem OpDestacados;
     private javax.swing.JMenuItem OpPapelera;
+    private javax.swing.JProgressBar PBDescarga;
     private javax.swing.JProgressBar PBPath;
     private javax.swing.JPopupMenu PopUpArchivos;
     private javax.swing.JComboBox<String> cb_extension;
@@ -407,6 +468,7 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JLabel lb_nombre;
     // End of variables declaration//GEN-END:variables
 }
