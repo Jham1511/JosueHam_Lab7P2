@@ -6,6 +6,7 @@ package josueham_lab7p2;
 
 import javax.swing.JList;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
 
 /**
@@ -71,6 +72,7 @@ public class adminDescarga extends Thread {
                 barra.setValue(barra.getValue() + 1);
                 if (barra.getValue() == 100000000) {
                     vive = false;
+                    barra.setValue(0);
                 }
             } //FIN IF
 
@@ -78,7 +80,7 @@ public class adminDescarga extends Thread {
                 String[] tokens = lista.getSelectedValue().toString().split("\\|");
                 Archivo arch = new Archivo(tokens[0], tokens[2], tokens[1], Double.parseDouble(tokens[3]));
                 segundos = arch.getTamanho() * 10;
-                Thread.sleep((long) segundos);
+                Thread.sleep((int)segundos);
             } catch (InterruptedException ex) {
             }
         }

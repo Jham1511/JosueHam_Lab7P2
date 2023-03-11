@@ -66,11 +66,11 @@ public class adminPBPath extends Thread{
     
     @Override
     public void run(){
-        if (lista.getSelectedValue()!= barra.getString()) {
-            barra.setString((String)lista.getSelectedValue());
+            if (barra.getString() == null) {
+            barra.setString(lista.getSelectedValue().toString());
         }
-        
         try {
+            
             Thread.sleep(50);
         } catch(Exception e) {
         }
