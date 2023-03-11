@@ -158,6 +158,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Descargar Archivo"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="OpDescargaMouseClicked"/>
+          </Events>
         </MenuItem>
       </SubComponents>
     </Container>

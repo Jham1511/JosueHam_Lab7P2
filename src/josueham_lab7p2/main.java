@@ -31,7 +31,7 @@ public class main extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
        adminPBPath PB = new adminPBPath (JListArchivos, PBPath);
        Thread proceso =  new Thread(PB);
-       proceso.start();
+       proceso.start();     
     }
 
     /**
@@ -161,6 +161,11 @@ public class main extends javax.swing.JFrame {
         PopUpArchivos.add(jSeparator2);
 
         OpDescarga.setText("Descargar Archivo");
+        OpDescarga.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                OpDescargaMouseClicked(evt);
+            }
+        });
         PopUpArchivos.add(OpDescarga);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -336,6 +341,13 @@ public class main extends javax.swing.JFrame {
         papelera.setArchivos(u);
         papelera.escribirArchivo();
     }//GEN-LAST:event_OpPapeleraMouseClicked
+
+    private void OpDescargaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_OpDescargaMouseClicked
+        boolean vive ;
+        boolean avanzar ;
+        
+        adminDescarga des = new adminDescarga(PBDescarga, SOMEBITS, JListCarpetas, OpDescarga);
+    }//GEN-LAST:event_OpDescargaMouseClicked
 
     /**
      * @param args the command line arguments

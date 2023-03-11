@@ -69,5 +69,10 @@ public class adminPBPath extends Thread{
         if (lista.getSelectedValue()!= barra.getString()) {
             barra.setString((String)lista.getSelectedValue());
         }
+        
+        try {
+            Thread.sleep(50);
+        } catch(Exception e) {
+        }
     }
 }
