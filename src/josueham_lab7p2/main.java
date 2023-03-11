@@ -35,9 +35,9 @@ public class main extends javax.swing.JFrame {
     public main() {
         initComponents();
         this.setLocationRelativeTo(null);
-        adminPBPath PB = new adminPBPath(JListArchivos, PBPath);
-        Thread proceso = new Thread(PB);
-        proceso.start();
+//        adminPBPath PB = new adminPBPath(JListArchivos, PBPath);
+//        Thread proceso = new Thread(PB);
+//        proceso.start();
     }
 
     /**
@@ -325,6 +325,11 @@ public class main extends javax.swing.JFrame {
         jButton1.setBackground(new java.awt.Color(51, 102, 255));
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Crear Carpeta");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -534,7 +539,13 @@ public class main extends javax.swing.JFrame {
         ac.setCarpetas(c);
         ac.escribirArchivo();
         JOptionPane.showMessageDialog(this, "Carpeta agregada exitosamente");
+        
+        DiaCRUDCarpetas.setVisible(false);
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -641,6 +652,12 @@ public class main extends javax.swing.JFrame {
         fw.close();
     }
 
+    public void  abrirCarp (){
+        DiaCRUDCarpetas.pack();
+        DiaCRUDCarpetas.setLocationRelativeTo(this);
+        DiaCRUDCarpetas.setVisible(true);
+        this.setVisible(false);
+    }
     adminArchivos miUnidad = new adminArchivos("./archivos.ar");
     adminArchivos destacados = new adminArchivos("./destacados.des");
     adminArchivos papelera = new adminArchivos("./papelera.pap");
